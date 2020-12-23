@@ -79,8 +79,12 @@ public class EnemyRay : MonoBehaviour
     }
     private void FollowTarget()
     {
+        if(Vector3.Distance(transform.position, _player.position) < 5.0f)
+        {
         isPatrol = false;
         navMeshAgent.SetDestination(_player.position);
+        }
+        
     }
 
     private void Wait()
