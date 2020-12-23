@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class MainPlayer : MonoBehaviour
 {
-   
     private float _speed = 7;
     private float _turnSpeed = 90;
     private Vector3 _direction = Vector3.zero;
@@ -18,7 +17,7 @@ public class MainPlayer : MonoBehaviour
     {
         //_rotation = Input.GetAxis("Horizontal");
         _direction.x = Input.GetAxis("Horizontal");
-        _direction.z = Input.GetAxis("Vertical");        
+        _direction.z = Input.GetAxis("Vertical");     
     }
     private void FixedUpdate()
     {

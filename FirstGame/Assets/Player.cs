@@ -6,7 +6,7 @@ public class Player : MonoBehaviour
 {
    
     
-      private float _speed = 15;
+     [SerializeField]private float _speed = 15;
     private Vector3 _direction = Vector3.zero;
 
     private void Update()
@@ -14,6 +14,6 @@ public class Player : MonoBehaviour
         _direction.x = -Input.GetAxis("Horizontal");
         _direction.z = -Input.GetAxis("Vertical");
 
-        transform.position += _direction * Time.deltaTime;
+        transform.position += _direction * Time.deltaTime *_speed;
     }
 }

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -9,6 +9,9 @@ public class EnemyRay : MonoBehaviour
     [SerializeField] private Transform[] waypoints;
     [SerializeField] private Transform _player;
     [SerializeField] private LayerMask _mask;
+    [SerializeField] private Animator myAnimator;
+    private float distance;
+    private float invoke_delay = 4f;
     private RaycastHit hit;
     private float _startOffset = 1.5f;
 
@@ -18,6 +21,7 @@ public class EnemyRay : MonoBehaviour
 
     private void Awake(){
        _player = GameObject.FindGameObjectWithTag("Player").transform; 
+       
     }
     private void Start() 
     {
@@ -34,9 +38,10 @@ public class EnemyRay : MonoBehaviour
         var directionToPlayer = CalculateOffset(_player.position) - startRaycastPosition;
 
         var rayCast = Physics.Raycast(startRaycastPosition, directionToPlayer, out hit, directionToPlayer.magnitude, _mask);
-
+        
         if (rayCast)
         {
+            
                if (hit.collider.gameObject.CompareTag("Player"))
             {
                 color = Color.green;
@@ -44,7 +49,7 @@ public class EnemyRay : MonoBehaviour
              }
              else
             {
-                Comeback();
+                Invoke("Comeback", invoke_delay);
             }
 
         }
@@ -79,10 +84,17 @@ public class EnemyRay : MonoBehaviour
     }
     private void FollowTarget()
     {
-        if(Vector3.Distance(transform.position, _player.position) < 5.0f)
-        {
+        distance = Vector3.Distance(transform.position, _player.position);
+        if (distance < 10 && distance > 1.5) {
         isPatrol = false;
         navMeshAgent.SetDestination(_player.position);
+        myAnimator.Play ("Z_Run");
+        }
+
+        if (distance <= 1.5) {
+        isPatrol = false;
+        navMeshAgent.SetDestination(_player.position);
+        myAnimator.Play ("Z_Attack");
         }
         
     }
